@@ -1,5 +1,7 @@
 package com.inikoLocal.DBstorage;
 
+import java.util.ArrayList;
+
 public interface DBService {
 
     boolean insert(Object obj);
@@ -8,7 +10,7 @@ public interface DBService {
 
     Object[] delete(int id);
 
-    Object getAll();
+    ArrayList<?> getAll();
 
     Object getById(int id);
 

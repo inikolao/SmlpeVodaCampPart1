@@ -2,6 +2,8 @@ package com.inikoLocal.DBstorage;
 
 import com.inikoLocal.DBstorage.Files.File;
 
+import java.util.ArrayList;
+
 public class FilesDB implements DBService{
 
     private File files[];
@@ -28,7 +30,7 @@ public class FilesDB implements DBService{
     }
 
     @Override
-    public Object getAll() {
+    public ArrayList<File> getAll() {
         return null;
     }
 

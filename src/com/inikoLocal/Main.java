@@ -1,5 +1,7 @@
 package com.inikoLocal;
 
+import com.inikoLocal.DBstorage.FilesDB;
+import com.inikoLocal.DBstorage.UsersDB;
 import com.inikoLocal.Screens.InitalScreen;
 import com.inikoLocal.Screens.LogingScreen;
 import com.inikoLocal.Screens.MenuScreen;
@@ -20,6 +22,8 @@ public class Main {
 
         //
         Initaliser initaliser=new Initaliser();
+        FilesDB files=initaliser.getFiles();
+        UsersDB users=initaliser.getUsers();
 
         InitalScreen screen=new InitalScreen();
 
@@ -36,18 +40,18 @@ public class Main {
         screen.clearScreen();
 
 
-        LogingScreen logingScreen=new LogingScreen();
+        LogingScreen logingScreen=new LogingScreen(users);
 
-        boolean flag=true;
+        boolean flag;
         do {
             logingScreen.GetMenu(0);
             logingScreen.GetMenu(1);
-            logingScreen.setUserName(logingScreen.getSuserInput().nextLine()+"\r");
+            logingScreen.setUserName(logingScreen.getSuserInput().nextLine());
             logingScreen.GetMenu(2);
-            logingScreen.setPassWord(logingScreen.getSuserInput().nextLine()+"\r");
+            logingScreen.setPassWord(logingScreen.getSuserInput().nextLine());
             logingScreen.clearScreen();
             flag=logingScreen.Login(logingScreen.getUserName(), logingScreen.getPassWord());
-            if(flag==true)
+            if(flag)
             {
                 logingScreen.GetMenu(3);
             }
@@ -59,8 +63,8 @@ public class Main {
             //logingScreen.clearScreen();
         } while (!flag);
 
+        MenuScreen menuScreen=new MenuScreen();
 
-        logingScreen.getContinueP();
 
 
 

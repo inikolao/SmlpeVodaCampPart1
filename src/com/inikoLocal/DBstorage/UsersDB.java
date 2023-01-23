@@ -2,20 +2,22 @@ package com.inikoLocal.DBstorage;
 
 import com.inikoLocal.DBstorage.Users.User;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class UsersDB implements DBService{
 
-    private User users[];
+    private ArrayList<User> users;
     int count =0;
 
     public UsersDB(int noofproducts)
     {
-        users=new User [noofproducts];
+        users=new ArrayList<>(noofproducts);
     }
 
     @Override
     public boolean insert(Object obj) {
+        users.add((User) obj);
         return false;
     }
 
@@ -30,8 +32,8 @@ public class UsersDB implements DBService{
     }
 
     @Override
-    public Object getAll() {
-        return null;
+    public ArrayList<User> getAll() {
+       return users;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class UsersDB implements DBService{
     @Override
     public String toString() {
         return "UsersDB{" +
-                "users=" + Arrays.toString(users) +
+                "users=" + users +
                 ", count=" + count +
                 '}';
     }
