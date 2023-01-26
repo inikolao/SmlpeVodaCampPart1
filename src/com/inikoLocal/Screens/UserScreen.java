@@ -11,12 +11,12 @@ public class UserScreen extends Screen {
 
     private UsersDB usersDB;
     private FilesDB filesDB;
-    private ArrayList<String> MenuUsers;
-    int userFN = -1;
+    private ArrayList<String> MenuUsers=new ArrayList<>();
+    private int userFN = -1;
 
     public UserScreen(UsersDB users, FilesDB files) {
         super();
-        MenuUsers.add("User Menu.\n\n\n\n\n\n\n\n\n\n\n\n");
+        MenuUsers.add("User Menu.\n\n");
         MenuUsers.add("1. Add User");
         MenuUsers.add("2. Delete User");
         MenuUsers.add("3. Return");
@@ -29,13 +29,14 @@ public class UserScreen extends Screen {
         switch (userFN) {
             case 1:
                 usersDB.insert(CreateUser());
+                System.out.println("User Created");
                 break;
             case 2:
+                System.out.println("Insert Id to delete");
+                super.getSuserInput().reset();
                 int idDl=Integer.parseInt(super.getSuserInput().nextLine());
                 DeleteUser(idDl);
-                //
-                break;
-            case 3:
+                System.out.println("User Deleted");
                 //
                 break;
             default:
@@ -45,13 +46,12 @@ public class UserScreen extends Screen {
     private User CreateUser()
     {
         int newId=usersDB.getAll().get(usersDB.getAll().size()-1).getId()+1;
-        User user=new User();
+
         System.out.println("Insert New Username");
-        user.setUsername(super.getSuserInput().nextLine());
+        String uname=super.getSuserInput().nextLine();
         System.out.println("Insert New Password");
-        user.setPassword(super.getSuserInput().nextLine());
-        user.setId(newId);
-        return user;
+        String upass=super.getSuserInput().nextLine();
+        return new User(newId,uname,upass);
     }
     private void DeleteUser(int id)
     {
@@ -62,6 +62,10 @@ public class UserScreen extends Screen {
 
     public void setFn(int userFN) {
         this.userFN = userFN;
+    }
+
+    public int getUserFN() {
+        return userFN;
     }
 
     public ArrayList<String> getMenuUsers() {

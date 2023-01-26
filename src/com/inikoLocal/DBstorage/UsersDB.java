@@ -28,6 +28,7 @@ public class UsersDB implements DBService{
 
     @Override
     public void delete(int id) {
+        //users.stream().filter(user -> user.equals(user.getId())).findFirst().get();
         users.remove(id);
     }
 

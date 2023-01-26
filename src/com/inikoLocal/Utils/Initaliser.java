@@ -1,5 +1,6 @@
 package com.inikoLocal.Utils;
 
+import com.inikoLocal.DBstorage.Files.File;
 import com.inikoLocal.DBstorage.FilesDB;
 import com.inikoLocal.DBstorage.Users.User;
 import com.inikoLocal.DBstorage.UsersDB;
@@ -16,6 +17,7 @@ public class Initaliser {
         files=new FilesDB(10000);
         users=new UsersDB(10);
         sampleUsersAdd();
+        sampleFilesAdd();
     }
 
     private void sampleUsersAdd()
@@ -23,6 +25,12 @@ public class Initaliser {
         users.insert(new User(1,"admin","papaki"));
         for (int i = 0; i < 9; i++) {
             users.insert(new User(i,GenRandomString(),GenRandomString()));
+        }
+    }
+    private void sampleFilesAdd()
+    {
+        for (int i = 0; i < 9; i++) {
+            files.insert(new File(i,GenRandomString(),null,null));
         }
     }
 

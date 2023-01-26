@@ -51,10 +51,12 @@ public class MenuScreen extends Screen{
     public void MenuFunctions() throws IOException {
         switch (fn){
             case 0:
+                super.clearScreen();
                 DisplayUsers();
                 break;
             case 1:
-                //
+                super.clearScreen();
+                DisplayFiles();
                 break;
             case 2:
                 //
@@ -79,16 +81,21 @@ public class MenuScreen extends Screen{
 
     public void DisplayFiles()
     {
-        super.clearScreen();
+
+        //super.clearScreen();
         ArrayList<File> files= filesDB.getAll();
         Short(files);
+        System.out.println("id\t"+"Filename\t"+"PATH\t");
+        System.out.println("");
         for (int i = 0; i < files.size(); i++) {
+            System.out.println(files.get(i).getId()+"\t"+files.get(i).getFileName()+"\t"+"");//files.get(i).getFilePath().toString();
 
         }
 
     }
     public void DisplayUsers()
     {
+        boolean flag;
         ArrayList<User> users= usersDB.getAll();
         System.out.println("id\t"+"User\t"+"Encrypted Pass");
         System.out.println("");
@@ -105,10 +112,13 @@ public class MenuScreen extends Screen{
         } catch (IOException e) {
             // e.printStackTrace();
             System.out.println("Error in input");
-            DisplayUsers();
+           /*if(userScreen.getUserFN()==3)
+           {
+               break;
+           }*/
             //flag=false;
         }
-
+        DisplayUsers();
         MenuOptionFinalised();
 
     }
