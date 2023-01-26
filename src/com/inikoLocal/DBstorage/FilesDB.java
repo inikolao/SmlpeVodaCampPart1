@@ -6,16 +6,18 @@ import java.util.ArrayList;
 
 public class FilesDB implements DBService{
 
-    private File files[];
+    private ArrayList<File> files;
     int count =0;
 
     public FilesDB(int noofFiles)
     {
-        files=new File [noofFiles];
+        files=new ArrayList<> (noofFiles);
     }
 
     @Override
     public boolean insert(Object obj) {
+
+        files.add((File) obj);
         return false;
     }
 
@@ -25,13 +27,13 @@ public class FilesDB implements DBService{
     }
 
     @Override
-    public Object[] delete(int id) {
-        return new Object[0];
+    public void delete(int id) {
+        //
     }
 
     @Override
     public ArrayList<File> getAll() {
-        return null;
+        return files;
     }
 
     @Override
@@ -44,4 +46,11 @@ public class FilesDB implements DBService{
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "FilesDB{" +
+                "files=" + files +
+                ", count=" + count +
+                '}';
+    }
 }

@@ -2,21 +2,26 @@ package com.inikoLocal.DBstorage.Users;
 
 public class User {
 
+    private int Id;
     private String Username;
     private String Password;
     private String PasswordHash;
 
-    public User(String User,String Pass)
+    public  User()
+    {}
+
+    public User(int id,String User,String Pass)
     {
+        this.Id=id;
         this.Username=User;
         this.Password=Pass;
         HashPass(Pass);
 
     }
 
-    public void HashPass(String password)
+    private void HashPass(String password)
     {
-        //
+        PasswordHash=Integer.toString(password.hashCode());
     }
 
     public String getUsername() {
@@ -41,5 +46,13 @@ public class User {
 
     public void setPasswordHash(String passwordHash) {
         PasswordHash = passwordHash;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 }

@@ -76,4 +76,18 @@ public class Screen {
     {
         System.out.println(menuStrings.get(menuInt));
     }
+    public void DrawScreen()
+    {
+        for (int i = 0; i <menuStrings.size() ; i++) {
+
+            System.out.println(menuStrings.get(i));
+        }
+    }
+    public void DrawScreen(ArrayList<?> listMenu)
+    {
+        for (int i = 0; i <listMenu.size() ; i++) {
+
+            System.out.println(listMenu.get(i));
+        }
+    }
 }

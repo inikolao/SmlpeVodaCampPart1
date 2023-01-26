@@ -8,7 +8,7 @@ public interface DBService {
 
     boolean update(Object obj);
 
-    Object[] delete(int id);
+    void delete(int id);
 
     ArrayList<?> getAll();
 

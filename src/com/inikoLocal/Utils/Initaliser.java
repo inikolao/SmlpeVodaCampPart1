@@ -20,9 +20,9 @@ public class Initaliser {
 
     private void sampleUsersAdd()
     {
-        users.insert(new User("admin","papaki"));
+        users.insert(new User(1,"admin","papaki"));
         for (int i = 0; i < 9; i++) {
-            users.insert(new User(GenRandomString(),GenRandomString()));
+            users.insert(new User(i,GenRandomString(),GenRandomString()));
         }
     }
 

@@ -26,17 +26,17 @@ public class Main {
         UsersDB users=initaliser.getUsers();
 
         InitalScreen screen=new InitalScreen();
-
-        for (int i = 0; i <screen.getMenuStrings().size() ; i++) {
-
-            screen.GetMenu(i);
-        }
+        screen.clearScreen();
+        screen.DrawScreen();
         screen.getContinueP();
         do {
-            System.out.print("\b\b\b\b\b");
-            screen.setUserInput(screen.getSuserInput().nextLine()+"\r");
+            ///System.out.print("\b\b\b\b\b");
+            screen.setUserInput(screen.getSuserInput().nextLine());
+            //System.out.println("koita: "+screen.getUserInput());
+            //boolean ppl=(screen.getUserInput().isBlank())|(screen.getUserInput().isEmpty());
+            //System.out.println("koita OR: "+ppl);
 
-        } while (screen.getUserInput().isEmpty()||screen.getUserInput().isBlank());
+        } while (screen.getUserInput().isEmpty());
         screen.clearScreen();
 
 
@@ -62,12 +62,23 @@ public class Main {
             }
             //logingScreen.clearScreen();
         } while (!flag);
-
-        MenuScreen menuScreen=new MenuScreen();
-
-
-
-
+        logingScreen.clearScreen();
+        MenuScreen menuScreen=new MenuScreen(logingScreen.getUserName(),users,files);
+        do {
+            menuScreen.DrawScreen();
+            System.out.println();
+            menuScreen.DisplayFiles();
+            System.out.println("\nGive your Option.");
+            menuScreen.setUserInput(menuScreen.getSuserInput().nextLine());
+            menuScreen.setFn(Integer.parseInt(menuScreen.getUserInput()));
+            try {
+                menuScreen.MenuFunctions();
+            } catch (IOException e) {
+               // e.printStackTrace();
+                System.out.println("Error in input");
+                flag=false;
+            }
+        } while (true);
 
 
     }

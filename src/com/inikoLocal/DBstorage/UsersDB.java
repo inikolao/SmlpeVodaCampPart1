@@ -27,8 +27,8 @@ public class UsersDB implements DBService{
     }
 
     @Override
-    public Object[] delete(int id) {
-        return new Object[0];
+    public void delete(int id) {
+        users.remove(id);
     }
 
     @Override
