@@ -13,9 +13,11 @@ public class UserScreen extends Screen {
     private FilesDB filesDB;
     private ArrayList<String> MenuUsers=new ArrayList<>();
     private int userFN = -1;
+    private String CurrentString;
 
-    public UserScreen(UsersDB users, FilesDB files) {
+    public UserScreen(UsersDB users, FilesDB files,String Cuser) {
         super();
+        this.CurrentString=Cuser;
         MenuUsers.add("User Menu.\n\n");
         MenuUsers.add("1. Add User");
         MenuUsers.add("2. Delete User");
@@ -26,6 +28,7 @@ public class UserScreen extends Screen {
     }
 
     public void MenuFunctions() throws IOException {
+        boolean flag=false;
         switch (userFN) {
             case 1:
                 usersDB.insert(CreateUser());
@@ -35,10 +38,22 @@ public class UserScreen extends Screen {
                 System.out.println("Insert Id to delete");
                 super.getSuserInput().reset();
                 int idDl=Integer.parseInt(super.getSuserInput().nextLine());
-                DeleteUser(idDl);
-                System.out.println("User Deleted");
+                try {
+                    DeleteUser(idDl);
+                } catch (Exception e) {
+                    System.out.println("User not found to Delete");
+                    flag=true;
+                }
+                if(flag!=true)
+                {
+                System.out.println("User Deleted");}
                 //
                 break;
+            case 3:
+                super.clearScreen();
+                MenuScreen menuScreen=new MenuScreen(CurrentString,usersDB,filesDB);
+                menuScreen.MenuScreenEnable(menuScreen);
+
             default:
                 throw new IOException("Error in Input");
         }

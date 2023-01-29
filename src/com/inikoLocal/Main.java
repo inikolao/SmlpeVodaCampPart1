@@ -64,22 +64,7 @@ public class Main {
         } while (!flag);
         logingScreen.clearScreen();
         MenuScreen menuScreen=new MenuScreen(logingScreen.getUserName(),users,files);
-        do {
-            menuScreen.DrawScreen();
-            System.out.println();
-            menuScreen.DisplayFiles();
-            System.out.println("\nGive your Option.");
-            menuScreen.setUserInput(menuScreen.getSuserInput().nextLine());
-            menuScreen.setFn(Integer.parseInt(menuScreen.getUserInput()));
-            try {
-                menuScreen.MenuFunctions();
-            } catch (IOException e) {
-               // e.printStackTrace();
-                System.out.println("Error in input");
-                menuScreen.clearScreen();
-                flag=false;
-            }
-        } while (true);
+        menuScreen.MenuScreenEnable(menuScreen);
 
 
     }

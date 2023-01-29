@@ -15,4 +15,5 @@ public interface DBService {
     Object getById(int id);
 
     Object getShorted();
+
 }

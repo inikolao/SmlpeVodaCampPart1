@@ -9,6 +9,15 @@ public class File {
     private java.io.File file;
     private Path filePath;
 
+    public File()
+    {}
+    public File(int id, String fileName, Path filePath) {
+        Id = id;
+        FileName = fileName;
+        this.file = file;
+        this.filePath = filePath;
+    }
+
     public File(int id, String fileName, java.io.File file, Path filePath) {
         Id = id;
         FileName = fileName;
@@ -46,5 +55,14 @@ public class File {
 
     public void setFilePath(Path filePath) {
         this.filePath = filePath;
+    }
+
+    @Override
+    public String toString() {
+        return "File{" +
+                "Id=" + Id +
+                ", FileName='" + FileName + '\'' +
+                ", filePath=" + filePath +
+                '}';
     }
 }

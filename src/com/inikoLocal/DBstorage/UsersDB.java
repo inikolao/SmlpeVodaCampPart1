@@ -4,6 +4,8 @@ import com.inikoLocal.DBstorage.Users.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UsersDB implements DBService{
 
@@ -28,8 +30,13 @@ public class UsersDB implements DBService{
 
     @Override
     public void delete(int id) {
-        //users.stream().filter(user -> user.equals(user.getId())).findFirst().get();
-        users.remove(id);
+        //User usere=users.stream().filter(user -> user.equals(user.getId())).findFirst().get();
+        List<User> searchResult =users
+                .stream()
+                .filter(p-> p.getId()==id)
+                .collect(Collectors.toList());
+        //System.out.println(searchResult.get(0).getUsername());
+        users.remove(searchResult.get(0));
     }
 
     @Override
@@ -39,7 +46,11 @@ public class UsersDB implements DBService{
 
     @Override
     public Object getById(int id) {
-        return null;
+        List<User> searchResult =users
+                .stream()
+                .filter(p-> p.getId()==id)
+                .collect(Collectors.toList());
+        return searchResult.get(0);
     }
 
     @Override
