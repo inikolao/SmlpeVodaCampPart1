@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Scanner;
 
 public class MenuScreen extends Screen{
 
@@ -30,21 +32,23 @@ public class MenuScreen extends Screen{
             super.getMenuStrings().add("Please select from the following");
             super.getMenuStrings().add("0. UserManagement");
             super.getMenuStrings().add("1. Display All Files");
-            super.getMenuStrings().add("2. Edit a Product");
-            super.getMenuStrings().add("3. Add a new Product");
-            super.getMenuStrings().add("4. Delete a Product");
-            super.getMenuStrings().add("5. Search for a product");
+            super.getMenuStrings().add("2. Edit a File");
+            super.getMenuStrings().add("3. Add a new File");
+            super.getMenuStrings().add("4. Delete a File");
+            super.getMenuStrings().add("5. Search for a File");
             super.getMenuStrings().add("6. Short Files");
             super.getMenuStrings().add("7. Logout");
+            super.getMenuStrings().add("8. Terminate App");
         } else {
             super.getMenuStrings().add("Please select from the following");
             super.getMenuStrings().add("1. Display All Files");
-            super.getMenuStrings().add("2. Edit a Product");
-            super.getMenuStrings().add("3. Add a new Product");
-            super.getMenuStrings().add("4. Delete a Product");
-            super.getMenuStrings().add("5. Search for a product");
+            super.getMenuStrings().add("2. Edit a File");
+            super.getMenuStrings().add("3. Add a new File");
+            super.getMenuStrings().add("4. Delete a File");
+            super.getMenuStrings().add("5. Search for a File");
             super.getMenuStrings().add("6. Short Files");
             super.getMenuStrings().add("7. Logout");
+            super.getMenuStrings().add("8. Terminate App");
 
         }
         this.filesDB=files;
@@ -64,7 +68,7 @@ public class MenuScreen extends Screen{
                 break;
             case 1:
                 super.clearScreen();
-                DisplayFiles();
+                DisplayFiles(1);
                 break;
             case 2:
                 //
@@ -79,18 +83,19 @@ public class MenuScreen extends Screen{
                     System.out.println("File not found");
                     flag=true;
                 }
-                if (flag!=true)
+                if (!flag)
                 {
                 System.out.println("Edit file Name");
                 super.getSuserInput().reset();
                 file.setFileName(super.getSuserInput().nextLine());
                 System.out.println("File edited!");}
-                DisplayFiles();
+                DisplayFiles(0);
+                MenuOptionFinalised();
                 break;
             case 3:
                filesDB.insert(CreateFile());
                 System.out.println("File Created");
-
+                MenuOptionFinalised();
                 break;
             case 4:
                 System.out.println("Insert Id to delete");
@@ -104,6 +109,7 @@ public class MenuScreen extends Screen{
                 }
                 if(flag!=true)
                 {
+                    super.clearScreen();
                     System.out.println("File Deleted");}
 
                 break;
@@ -119,18 +125,54 @@ public class MenuScreen extends Screen{
                 }
                 if(flag!=true)
                 {
+                    super.clearScreen();
                     System.out.println("File Found");
                     System.out.println(file.toString());
                 }
+                MenuOptionFinalised();
 
                 break;
             case 6:
-                //
+                super.clearScreen();
                 ArrayList<File> filesToShort=filesDB.getAll();
                 System.out.println("Shorted files by Name");
+                filesToShort= Short(filesToShort);
+                DisplayFiles(filesToShort);
+                int sl=1;
+                do {
+                    System.out.println("Save?");
+                System.out.println("1. Yes");
+                System.out.println("2. No");
+                super.getSuserInput().reset();
+
+                flag=false;
+
+                    try {
+                        sl=Integer.parseInt(super.getSuserInput().nextLine());
+                        flag=true;
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error in Input");
+                        flag=false;
+                    }
+                } while (flag!=true);
+                if (sl==1)
+                {
+                    filesDB.update(filesToShort);
+                    super.clearScreen();
+                    System.out.println("File List updated");
+                    System.out.println("");
+                }
 
                 break;
             case 7:
+                super.clearScreen();
+                LogingScreen logingScreen=new LogingScreen(usersDB);
+                logingScreen.LogingScreenEnabe(logingScreen);
+                logingScreen.clearScreen();
+                MenuScreen menuScreen=new MenuScreen(logingScreen.getUserName(),usersDB,filesDB);
+                menuScreen.MenuScreenEnable(menuScreen);
+                break;
+            case 8:
                 System.exit(0);
                 break;
             default:
@@ -139,23 +181,42 @@ public class MenuScreen extends Screen{
     }
 
 
-    public void DisplayFiles()
+    public void DisplayFiles(int limit)
     {
 
         //super.clearScreen();
+        int lp=9;
         ArrayList<File> files= filesDB.getAll();
-        Short(files);
+        if(limit!=0)
+        {
+            lp=files.size();
+        }
+        //Short(files);
+
         System.out.println("id\t"+"Filename\t"+"PATH\t");
         System.out.println("");
-        for (int i = 0; i < files.size(); i++) {
+        for (int i = 0; i < lp; i++) {
+
             System.out.println(files.get(i).getId()+"\t"+files.get(i).getFileName()+"\t"+"");//files.get(i).getFilePath().toString();
 
         }
 
     }
+    private void DisplayFiles(ArrayList<File> list)
+    {
+        System.out.println("id\t"+"Filename\t"+"PATH\t");
+        System.out.println("");
+        for (int i = 0; i < list.size(); i++) {
+
+            System.out.println(list.get(i).getId()+"\t"+list.get(i).getFileName()+"\t"+"");//files.get(i).getFilePath().toString();
+
+        }
+
+    }
+
     public void DisplayUsers()
     {
-        boolean flag;
+        boolean flag=false;
         ArrayList<User> users= usersDB.getAll();
         System.out.println("id\t"+"User\t"+"Encrypted Pass");
         System.out.println("");
@@ -163,14 +224,15 @@ public class MenuScreen extends Screen{
             System.out.println(users.get(i).getId()+ "\t"+users.get(i).getUsername()+"\t" +users.get(i).getPasswordHash() );
 
         }
-
         super.DrawScreen(userScreen.getMenuUsers());
+        try {
         userScreen.setUserInput(userScreen.getSuserInput().nextLine());
         userScreen.setFn(Integer.parseInt(userScreen.getUserInput()));
-        try {
+
             userScreen.MenuFunctions();
-        } catch (IOException e) {
+        } catch (Exception e) {
             // e.printStackTrace();
+            super.clearScreen();
             System.out.println("Error in input");
            /*if(userScreen.getUserFN()==3)
            {
@@ -204,10 +266,11 @@ public class MenuScreen extends Screen{
        return (File) filesDB.getById(Id);
     }
 
-    public void Short(ArrayList<?> list)
+    public ArrayList<File> Short(ArrayList<File> list)
     {
+        list.sort(Comparator.comparing(File::getFileName));
 
-
+        return list;
     }
 
     public void setFn(int fn) {
@@ -227,15 +290,18 @@ public class MenuScreen extends Screen{
        do {
            menuScreen.DrawScreen();
            System.out.println();
-           menuScreen.DisplayFiles();
+           menuScreen.DisplayFiles(1);
            System.out.println("\nGive your Option.");
+           try {
            menuScreen.setUserInput(menuScreen.getSuserInput().nextLine());
            menuScreen.setFn(Integer.parseInt(menuScreen.getUserInput()));
-           try {
+
                menuScreen.MenuFunctions();
-           } catch (IOException e) {
+           } catch (Exception e) {
                // e.printStackTrace();
                System.out.println("Error in input");
+               System.out.println("Press Any Key To Continue...");
+               new java.util.Scanner(System.in).nextLine();
                menuScreen.clearScreen();
                flag=false;
            }
