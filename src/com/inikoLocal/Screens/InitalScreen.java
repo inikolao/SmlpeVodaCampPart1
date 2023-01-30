@@ -10,7 +10,7 @@ public class InitalScreen extends Screen{
     {
         super();
         super.getMenuStrings().add("Welcome.\n\n\n\n\n\n\n\n\n\n\n\n");
-        super.getMenuStrings().add("Dev: Ioannis Nikolaou");
+        super.getMenuStrings().add("Dev: Ioannis Nikolaou (ioannis.nikolaou@vodafone.com)");
         super.getMenuStrings().add("File Management App\n");
 
     }
