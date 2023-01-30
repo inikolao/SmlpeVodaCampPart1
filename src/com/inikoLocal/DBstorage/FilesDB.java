@@ -26,7 +26,9 @@ public class FilesDB implements DBService{
 
     @Override
     public boolean update(Object obj) {
-        return false;
+
+        files= (ArrayList<File>) obj;
+        return true;
     }
 
     @Override

@@ -15,12 +15,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
-        /*Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            Signal.handle(new Signal("INT"),  // SIGINT
-                    signal -> System.out.println("Interrupted by Ctrl+C"));}));*/
-
-        //
+	
         Initaliser initaliser=new Initaliser();
         FilesDB files=initaliser.getFiles();
         UsersDB users=initaliser.getUsers();
@@ -30,11 +25,8 @@ public class Main {
         screen.DrawScreen();
         screen.getContinueP();
         do {
-            ///System.out.print("\b\b\b\b\b");
             screen.setUserInput(screen.getSuserInput().nextLine());
-            //System.out.println("koita: "+screen.getUserInput());
-            //boolean ppl=(screen.getUserInput().isBlank())|(screen.getUserInput().isEmpty());
-            //System.out.println("koita OR: "+ppl);
+
 
         } while (screen.getUserInput().isEmpty());
         screen.clearScreen();
@@ -42,26 +34,7 @@ public class Main {
 
         LogingScreen logingScreen=new LogingScreen(users);
 
-        boolean flag;
-        do {
-            logingScreen.GetMenu(0);
-            logingScreen.GetMenu(1);
-            logingScreen.setUserName(logingScreen.getSuserInput().nextLine());
-            logingScreen.GetMenu(2);
-            logingScreen.setPassWord(logingScreen.getSuserInput().nextLine());
-            logingScreen.clearScreen();
-            flag=logingScreen.Login(logingScreen.getUserName(), logingScreen.getPassWord());
-            if(flag)
-            {
-                logingScreen.GetMenu(3);
-            }
-            else
-            {
-                logingScreen.GetMenu(4);
-
-            }
-            //logingScreen.clearScreen();
-        } while (!flag);
+        logingScreen.LogingScreenEnabe(logingScreen);
         logingScreen.clearScreen();
         MenuScreen menuScreen=new MenuScreen(logingScreen.getUserName(),users,files);
         menuScreen.MenuScreenEnable(menuScreen);

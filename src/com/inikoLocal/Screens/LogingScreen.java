@@ -53,4 +53,28 @@ public class LogingScreen extends Screen {
     public void setPassWord(String passWord) {
         PassWord = passWord;
     }
+
+    public void LogingScreenEnabe(LogingScreen logingScreen)
+    {
+        boolean flag;
+        do {
+            logingScreen.GetMenu(0);
+            logingScreen.GetMenu(1);
+            logingScreen.setUserName(logingScreen.getSuserInput().nextLine());
+            logingScreen.GetMenu(2);
+            logingScreen.setPassWord(logingScreen.getSuserInput().nextLine());
+            logingScreen.clearScreen();
+            flag=logingScreen.Login(logingScreen.getUserName(), logingScreen.getPassWord());
+            if(flag)
+            {
+                logingScreen.GetMenu(3);
+            }
+            else
+            {
+                logingScreen.GetMenu(4);
+
+            }
+            //logingScreen.clearScreen();
+        } while (!flag);
+    }
 }

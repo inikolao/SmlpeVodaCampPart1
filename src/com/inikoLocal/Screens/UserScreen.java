@@ -32,6 +32,7 @@ public class UserScreen extends Screen {
         switch (userFN) {
             case 1:
                 usersDB.insert(CreateUser());
+                super.clearScreen();
                 System.out.println("User Created");
                 break;
             case 2:
@@ -44,8 +45,9 @@ public class UserScreen extends Screen {
                     System.out.println("User not found to Delete");
                     flag=true;
                 }
-                if(flag!=true)
+                if(!flag)
                 {
+                    super.clearScreen();
                 System.out.println("User Deleted");}
                 //
                 break;
@@ -55,6 +57,7 @@ public class UserScreen extends Screen {
                 menuScreen.MenuScreenEnable(menuScreen);
 
             default:
+                super.clearScreen();
                 throw new IOException("Error in Input");
         }
     }
